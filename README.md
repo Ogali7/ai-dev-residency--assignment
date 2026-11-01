@@ -1,45 +1,48 @@
 # AI Dev Residency Assignment
 
-This repo contains a Claude Code skill for reviewing UI designs before they go to engineering.
+This repo holds my work for the Tech Fleet AI Development Residency, organized by week.
 
-## design-handoff-qa skill
+## Week 1: Claude Code Skills
 
-`design-handoff-qa` checks a design (a Figma file, screenshot, mockup, or exported frames) for handoff readiness. It works through five checks in order and ends with a verdict of **Ready for handoff** or **Not ready for handoff**.
+Three Claude Code skills that help Claude review work for enterprise-ready quality: UX, accessibility, and security. Each skill follows the same pattern: a clear description of when to use it, ordered checks, a fixed set of headings, and a final verdict.
 
-The five checks:
+| Skill | What it reviews | Verdict |
+|---|---|---|
+| `design-handoff-qa` | UI designs (Figma files, screenshots, mockups) for handoff readiness: spacing, contrast, layer naming, missing states, and component consistency | Ready / Not ready for handoff |
+| `accessibility-code-review` | Front-end code against WCAG 2.2 AA: structure, keyboard and focus, screen reader labels, forms, motion and touch, plus cognitive accessibility for people with ADHD | Accessible / Not accessible |
+| `security-code-review` | Application code, with extra care for financial data: secrets and API keys, input handling, login, access control, data protection, and dependencies | Safe / Not safe to ship |
 
-1. **Spacing consistency**: spacing follows one scale (for example 4px or 8px), no one-off values, and elements that should align do.
-2. **Color contrast**: text and UI components meet WCAG AA (or AAA if you ask for it).
-3. **Layer naming**: layers have meaningful names, follow one convention, and there are no stray or hidden layers.
-4. **Missing states**: empty, loading, and error states are designed for each screen, plus interaction states where they matter.
-5. **Component consistency**: repeated elements use the same component and variants, with consistent typography, radii, shadows, and icon sizes.
-
-Each finding names the location, the problem, and a suggested fix. Every category gets a heading, and categories with no problems say **No issues found**.
-
-### Where it lives
+### Folder structure
 
 ```
-.claude/skills/design-handoff-qa/
-├── SKILL.md                      # The skill instructions and review process
-└── references/
-    └── wcag-contrast.md          # Contrast thresholds and how to calculate ratios
+Week 1/
+├── SUBMISSION.md
+└── skills/
+    ├── design-handoff-qa/
+    │   ├── SKILL.md
+    │   └── references/
+    │       └── wcag-contrast.md
+    ├── accessibility-code-review/
+    │   └── SKILL.md
+    └── security-code-review/
+        └── SKILL.md
 ```
 
-Because it sits in the project's `.claude/skills/` folder, Claude Code picks it up automatically when you work in this repo.
+### Installing the skills
 
-### How to use it in Claude Code
+Claude Code only loads skills from a `.claude/skills/` folder. To make these skills available in every session, copy the three folders from `Week 1/skills/` into your personal skills folder:
 
-1. Open this repo in Claude Code.
-2. Share the design with Claude: attach a screenshot or exported frames, or paste a link to the Figma file.
-3. Ask for a review in plain language, for example:
-   - "Review this design for handoff readiness."
-   - "Do a design QA pass on this mockup."
-   - "Check if this screen is ready for dev."
+- Windows: `C:\Users\<your-name>\.claude\skills\`
+- Mac or Linux: `~/.claude/skills/`
 
-Claude will follow the five steps and return the report under the five headings.
+Then start a new Claude Code session, since skills load when a session starts.
 
-If you only give Claude a flat image, it can't inspect layers. The layer naming section will say so instead of guessing.
+### Using the skills
 
-### Contrast checks
+Ask Claude to list its skills to confirm they loaded. Claude decides when to use a skill by reading its description, so small or simple requests may get a general answer instead. For a full, consistent review, ask for the skill by name, for example:
 
-The thresholds and calculation method are in [references/wcag-contrast.md](.claude/skills/design-handoff-qa/references/wcag-contrast.md). Ratios are not rounded up: 4.47:1 fails a 4.5:1 requirement.
+- "Run the design-handoff-qa skill on this mockup."
+- "Run the accessibility-code-review skill on this component."
+- "Run the security-code-review skill on this API route."
+
+These reviews support, but don't replace, testing with real assistive technology and professional security testing.
